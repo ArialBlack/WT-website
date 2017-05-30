@@ -1,0 +1,300 @@
+<?php
+
+/**
+* Implements hook_block_info().
+*/
+
+module_load_include('inc', 'wt', 'wt.adminmessages');
+
+function wt_menu(){
+    $items=array();
+
+    $items['admin/wt/labels'] = array(
+        'title' => 'wt admin labels',
+        'description' => 'Admin labels',
+        'type' => MENU_NORMAL_ITEM,
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('wt_admin_labels_form'),
+        'access arguments' => array('access adminstration page'),
+        'access callback' => TRUE,
+    );
+
+    $items['admin/wt/i'] = array(
+        'title' => 'i',
+        'description' => 'i',
+        'type' => MENU_NORMAL_ITEM,
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('wt_i_form'),
+        'access arguments' => array('access adminstration page'),
+        'access callback' => TRUE,
+    );
+
+    $items['countries/%/hotels'] = array(
+        'title' => 'Hotels of',
+        'page callback' => 'wt_hotels',
+        'page arguments' => array(1),
+        'access arguments' => array('access content'), // whatever see above
+        'type' => MENU_CALLBACK
+    );
+
+    return $items;
+}
+
+function wt_hotels($arg1) {
+    $content = null;
+
+
+
+    $cNid = db_select('url_alias', 'a')
+        ->fields('a', array('source'))
+        ->condition('a.alias', 'countries/' . $arg1)
+        ->execute()
+        ->fetchField();
+
+    $nid = substr($cNid, strrpos($cNid, '/') + 1);
+
+    $query = db_select('field_data_field_paren_node', 'n');
+    $query->fields('n', array('entity_id'));
+    $query->condition('n.field_paren_node_target_id', $nid);
+    $query->condition('n.bundle', 'hotel');
+    $nodes = $query->execute()->fetchAll();
+
+    $countryName = node_load($nid);
+    drupal_set_title('Отели ' . $countryName->title); //todo подумать над падежами
+
+    if(count($nodes) > 0) {
+        $content = '<table class="table table-striped"><thead><tr><th>Название отеля</th><th>Категория</th><th>Регион</th></tr></thead><tbody>';
+
+        foreach ($nodes as $row) {
+            $node = node_load($row->entity_id);
+            $region = node_load($node->field_parent_region['und'][0]['target_id']);
+            $content = $content . '<tr><td><a href="/node/' . $node->nid . '">' . $node->title . '</a></td><td>' . $node->field_stars["und"][0]["value"] . '</td><td>' . $region->title .'</td></tr>';
+        }
+
+        $content = $content . '</tbody></table>';
+    }
+
+    return $content;
+}
+
+
+function wt_i_form($form, &$form_state){
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Начать',
+    );
+
+    return $form;
+}
+
+function wt_form_alter(&$form, $form_state, $form_id) {
+   // dsm($form);
+    if($form_id == 'feeds_import_form'){
+        $form['feeds']['FeedsCSVParser']['delimiter']['#options']['~'] = '~';
+    }
+}
+
+function wt_i_form_submit($form, &$form_state) {
+    // Подготавливаем данные для операций
+   /* $query = db_select('node', 'n');
+    $query->fields('n', array('nid'));
+    $query->condition('n.type', 'tour');
+    $result = $query->execute();*/
+
+    $query = db_select('node', 'n');
+    $query->condition('n.type', 'tour');
+    // $query->innerJoin('_countries', 'c', 'h.intCountryID = c.intCountryID');
+    //$query->innerJoin('_regions', 'r', 'r.intRegionID = h.intRegionID');
+    $query->fields('n', array('nid'));
+    $query->range(0, 5);
+    $result = $query->execute();
+
+    // Создаём массив с операциями.
+    foreach ($result as $row) {
+        $operations[] = array('wt_update_f', array($row));
+    }
+
+    $batch = array(
+        // Массив операций и их параметров
+        'operations' => $operations,
+        // Функция, которая будет выполнена после окончания всех операций
+        'finished' => 'wt_i_form_finished',
+        // Заголовок страницы с прогресс баром.
+        // Опционально, по умолчанию t('Processing')
+        'title' => 'Обновление дат',
+        // Сообщение, показываемое при инициализации.
+        // Опционально, по умолчанию t('Initializing.')
+        'init_message' => 'Подготовка данных',
+        // Сообщение, показывемое при выполнении операций.
+        // Опционально, по умолчанию t('Completed @current of @total.')
+        'progress_message' => 'Выполнено @current из @total.',
+        // Сообщение показываемое при ошибке выполнения операции.
+        // Опционально, по умолчанию t('An error has occurred.')
+        'error_message' => 'Произошла ошибка.',
+    );
+
+    batch_set($batch);
+
+    // Если Batch API используется не из _submit функции,
+    // то дополнительно нужно вызвать batch_process();
+}
+
+/**
+ * Batch process callback.
+ */
+function wt_update_f($row, &$context) {
+
+    /*$node = node_load($nid);
+    $node_wrapper = entity_metadata_wrapper('node', $node);
+    $oldnid = $node->field_old_tour_id['und'][0]['value'];
+
+    $query2 = db_select('_excursions', 'e');
+    $query2->fields('e', array('intTourID', 'varShortDescription', 'varDescription', 'intPriceFrom', 'intCountryID', 'varAgencyComission', 'varPath', 'varFile', 'isVisible'));
+    $query2->condition('e.intTourID', $oldnid);
+    $result2 = $query2->execute()->fetchAll();
+
+    $query3 = db_select('_countries', 'c');
+    $query3->fields('c', array('varName'));
+    $query3->condition('c.intCountryID', $result2[0]->intCountryID);
+    $result3 = $query3->execute()->fetchField();
+
+    $query4 = db_select('node', 'n');
+    $query4->fields('n', array('nid'));
+    $query4->condition('n.type', 'country');
+    $query4->condition('n.title', $result3);
+    $result4 = $query4->execute()->fetchField();
+
+    if(strlen($result2[0]->varFile) >4) {
+        $query5 = db_select('file_managed', 'f');
+        $query5->fields('f', array('fid'));
+        $query5->condition('f.filename', $result2[0]->varFile);
+        $result5 = $query5->execute()->fetchField();
+    } else {
+        $result5 = false;
+    }
+
+
+    $node_wrapper->body->summary = strip_tags($result2[0]->varShortDescription);
+
+    $node_wrapper->body->value = $result2[0]->varDescription;
+    $node_wrapper->body->format = 'full_html';
+
+    $node_wrapper->field_tour_price = $result2[0]->intPriceFrom;
+
+    $node_wrapper->field_tour_a_com = $result2[0]->varAgencyComission;
+
+    $node_wrapper->field_tour_days = $result2[0]->varPath;
+
+    $node_wrapper->field_tour_country = $result4;
+
+    if($result5) {
+        $file = file_load($result5);
+        $node->field_tour_file['und'][0] = array(
+            'fid' => $file->fid,
+            'uid' => 1,
+            'filename' =>  $file->filename,
+            'uri'  => $file->uri,
+            'filemime'  => $file->filemime,
+            'filesize'  => $file->filesize,
+            'status'  =>  $file->status,
+            'timestamp'  => 1493323818,
+            'type'  => $file->type,
+            'display'  => 1,
+            'description'  => ''
+        );
+    }
+
+    $node_wrapper->save();
+
+    $node->status = $result2[0]->isVisible;
+    node_save($node);*/
+
+    /*$node = new stdClass();  // Create a new node object
+    $node->type = 'region';  // Content type
+    $node->language = LANGUAGE_NONE;  // Or e.g. 'en' if locale is enabled
+    node_object_prepare($node);  //Set some default values
+
+    $node->title = $row->varName;
+    $node->body['und'][0]['value'] = $row->varDescription;
+    $node->body['und'][0]['format'] = 'full_html';
+
+    $query4 = db_select('node', 'n');
+    $query4->fields('n', array('nid'));
+    $query4->condition('n.type', 'country');
+    $query4->condition('n.title', $row->varNameC);
+    $result4 = $query4->execute()->fetchField();
+
+    if($result4) {
+        $node->field_paren_node['und'][0]['target_id'] = $result4;
+    }
+
+    node_save($node);
+
+    $context['results']['titles'][] = $row->varName;
+    $context['message'] = 'Обновлена дата у материала <em>' . check_plain($row->varName) . '</em>';*/
+
+    /*$hotelNid = db_select('field_data_field_old_tour_id', 'f')
+        ->fields('f', array('entity_id'))
+        ->condition('f.bundle', 'hotel')
+        ->condition('f.field_old_tour_id_value', $row->intHotelID)
+        ->execute()
+        ->fetchField();
+
+    $node = node_load($hotelNid);
+    $node_wrapper = entity_metadata_wrapper('node', $node);
+
+    $node->body['und'][0]['value'] = $row->varDescription;
+    $node->body['und'][0]['format'] = 'full_html';
+
+    $query4 = db_select('node', 'n');
+    $query4->fields('n', array('nid'));
+    $query4->condition('n.type', 'country');
+    $query4->condition('n.title', $row->varNameC);
+    $result4 = $query4->execute()->fetchField();
+
+    if($result4) {
+        $node->field_paren_node['und'][0]['target_id'] = $result4;
+    }
+
+    $query5 = db_select('node', 'n');
+    $query5->fields('n', array('nid'));
+    $query5->condition('n.type', 'region');
+    $query5->condition('n.title', $row->varNameR);
+    $result5 = $query5->execute()->fetchField();
+
+    if($result5) {
+        $node->field_parent_region['und'][0]['target_id'] = $result5;
+    }
+
+
+    $node->field_stars['und'][0]['value'] = $row->varCountStars;
+
+    */
+
+    $node = node_load($row->nid);
+    
+    node_save($node);
+
+    $context['results']['titles'][] = $row->nid;
+    $context['message'] = 'Обновлена дата у материала <em>' . check_plain($row->nid) . '</em>';
+
+}
+
+/**
+ * Batch finish callback.
+ */
+function wt_i_form_finished($success, $results, $operations) {
+    if ($success) {
+        drupal_set_message('Обновлена дата у ' . count($results['titles']) . ' материалов:' . theme('item_list', array('items' => $results['titles'])));
+    }
+    else {
+        drupal_set_message('Завершено с ошибками.', 'error');
+    }
+}
+
+
+
+
+
+
+

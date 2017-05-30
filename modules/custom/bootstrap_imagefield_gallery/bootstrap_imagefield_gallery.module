@@ -1,0 +1,263 @@
+<?php
+/* bootstrap_imagefield_gallery */
+ include_once DRUPAL_ROOT .'/'. drupal_get_path('module', 'bootstrap_imagefield_gallery') .'/includes/bootstrap_imagefield_gallery_imagestyles.inc'; 
+ 
+ function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+ function bootstrap_imagefield_gallery_field_formatter_info() {
+  return array(
+    'bootstrap_imagefield_gallery_default' => array(
+      'label' => t('Bootstrap imagefield gallery'),
+      'field types' => array('image','media'),
+      'settings' => array(
+        'slide_style' => 'bootstrap_imagefield_gallery_slide',
+      ),
+      'description' => t('Display multi-value fields as an Bootstrap Gallery.'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function bootstrap_imagefield_gallery_field_formatter_settings_form($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $form = array();
+  $options = array(t('None'),);
+  // get a list of all style names for our form options
+  foreach (image_styles() as $id => $style) {
+    $options[$id] = $id;
+  }
+  $form['slide_style'] = array(
+    '#type' => 'select',
+    '#title' => t('Select the slide style'),
+    '#options' => $options,
+    '#default_value' => $settings['slide_style'],
+    '#description' => t('Select the imagecache style you would like to show when clicked on the thumbnail.'),
+  );
+  
+
+  return $form;
+}
+
+
+
+
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function bootstrap_imagefield_gallery_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $summary[] = t('Slides style: @value', array('@value' => $settings['slide_style']));
+ 
+
+  
+  return implode ('<br />', $summary);
+}
+
+
+
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function bootstrap_imagefield_gallery_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  // if there are no images, dont do anything else
+  if(empty($items)){
+    return $element;
+  }
+  $modulepath = drupal_get_path('module', 'bootstrap_imagefield_gallery');
+  $settings = $display['settings'];
+
+
+  // Media field support (only images)
+  if ($field['type'] == 'media') {
+    foreach ($items as $delta => $item) {
+      if ($item['file']->type == 'image') {
+        $items[$delta] = (array) $item; // Compatibility with 7.x-1.0-beta4 and previous media versions
+        $items[$delta]['uri'] = $item['file']->uri;
+        $items[$delta]['filename'] = $item['file']->filename;
+      }
+    }
+    /**
+     * If it's not an image remove it from our items.
+     * We need to do it on another foreach in order not to mess up the $delta on the next run above.
+     */
+    $changed = FALSE;
+    foreach($items as $delta => $item) {
+      if ($item['file']->type !== 'image') {
+        unset($items[$delta]);
+        $changed = TRUE;
+      }
+    }
+    // if we removed from $items, reset the array keys
+    if ($changed) {
+      $items = array_values($items);
+    }
+  }
+
+  // Get the dimensions, and remove unfound files,
+  // to avoid errors when the image is no longer on the server but still in the image field.
+  $changed = FALSE;
+  foreach ($items as $delta => $item) {
+    $dimensions['slides'] = bootstrap_imagefield_gallery_getimage_dimensions($settings['slide_style'], $items[$delta]['uri']);
+    if (!$dimensions['slides']) {
+      unset($items[$delta]);
+      $changed = TRUE;
+    }
+  };
+  // if we removed from $items, reset the array keys
+  if ($changed) {
+    $items = array_values($items);
+  }
+
+  // if there are no images, dont do anything else
+  if(empty($items)) {
+    return $element;
+  }
+
+  $dimensions['slides'] = bootstrap_imagefield_gallery_getimage_dimensions($settings['slide_style'], $items[0]['uri']);
+  $num_of_images = count($items);
+
+  // prepare the renderable array
+  $renderitems = array();
+  $renderitems['thumbs'] = array();
+
+  // get the unique entity id for later
+  $ids = entity_extract_ids($entity_type, $entity);
+  $entity_id =  $ids[0];
+
+  foreach ($items as $delta => $item){
+    /*
+     *  prepare slides
+     */
+    // Grab and sanitize image information
+    // $renderitems['slides'][$delta]['description'] = $item['description']; // so far no description in d7 image fields
+    if (!empty($item['title'])) {
+      // Sanitize the title
+      if(strpos($item['title'], '<') !== FALSE) {
+        $item['title'] = strip_tags($item['title']);
+      }
+    }
+    else {
+      $item['title'] = ''; // prevents php notices
+    }
+    $renderitems['slides'][$delta]['title'] = $item['title'];
+    $item['filename'] = $item['filename'] = '';
+
+    // Check if alt attribute is already set and sanitize it, if not use the filename as alt attribute
+    if (isset($item['alt']) && !empty($item['alt'])) {
+      if(strpos($item['alt'], '<') !== FALSE) {
+        $item['alt'] = strip_tags($item['alt']);
+      }
+    }
+    else {
+      $item['alt'] = $item['filename'];
+    }
+    $renderitems['slides'][$delta]['alt'] = $item['alt'];
+
+    // If the title is empty use alt or the node title in that order.
+    if (empty($item['title'])) {
+      if (!empty($item['alt'])) {
+        $item['title'] = $item['alt'];
+      }
+      else {
+        if(!empty($entity->title)){
+          if(strpos($entity->title, '<') !== FALSE) {
+            $item['title'] = strip_tags($entity->title);
+          }
+          else {
+            $item['title'] = $entity->title;
+          }
+        }
+        // if we have more than one image, add the image count to the title so they are not all the same.
+        $item['title'] = ($num_of_images > 1) ? $item['title'] . t(' image ') . ($delta + 1) : $item['title'];
+      }
+    }
+
+    // prepare the unique hash id per image
+    $slideset_id = $field['field_name'] . '-' . $entity_id;
+   // $renderitems['slides'][$delta]['hash_id'] = 'slide-' . $delta . '-' . $slideset_id;
+   $renderitems['slides'][$delta]['hash_id'] = $delta;
+
+    $renderitems['slides'][$delta]['image'] = theme('image_formatter', array(
+        'item' => $item,
+        'image_style' => $settings['slide_style'],
+      )
+    );    
+  }
+
+  //if($num_of_images > 1){
+  //  drupal_add_js($modulepath . '/js/bootstrap_imagefield_gallery.js');
+  //}
+
+
+  // prepare the variables for our theme function
+  $element['#theme'] ='bootstrap_imagefield_gallery';
+  $element['#slides'] = $renderitems['slides'];
+
+  $element['#settings'] = $settings;
+  $element['#dimensions'] = $dimensions;
+
+  return $element;
+}
+
+
+
+
+
+
+
+function bootstrap_imagefield_gallery_theme() {
+  return array(
+    'bootstrap_imagefield_gallery' => array(
+      'variables' => array('slides' => NULL, 'settings' => NULL, 'dimensions' => NULL),
+      'template' => 'theme/bootstrap_imagefield_gallery'
+    )
+  );
+}
+
+
+
+
+function bootstrap_imagefield_gallery_getimage_dimensions($stylename, $image_path) {
+  $ret = NULL;
+
+  // generate the image style image path
+  $transformed_path =  image_style_path($stylename, $image_path);
+  // grab the style itself
+  $style = image_style_load($stylename);
+
+  // if using the default style no need to get image info
+  $default_style = ($style['module'] == 'bootstrap_imagefield_gallery');
+  if (($style['storage'] == 4) && $default_style) {
+    $ret['height'] = $style['effects'][0]['data']['height'];
+    $ret['width'] = $style['effects'][0]['data']['width'];
+  }
+
+  // otherwise check if file exists, or create it so we can get the image dimensions
+  if (file_exists($transformed_path) || image_style_create_derivative($style, $image_path, $transformed_path)) {
+    // grab the image information
+    $image = image_get_info($transformed_path);
+    $ret['height'] = $image['height'];
+    $ret['width'] = $image['width'];
+  }
+  return $ret;
+}

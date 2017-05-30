@@ -1,0 +1,167 @@
+.f(@weight) {
+  font-weight: normal;
+  font-style: normal;
+
+  & when (@weight = "r") {
+  //  font-family: 'cormorantregular';
+  }
+
+  & when (@weight = "m") {
+   // font-family: 'cormorantmedium';
+  }
+
+  & when (@weight = "sb") {
+   // font-family: 'cormorantsemibold';
+  }
+
+  & when (@weight = "b") {
+    //font-family: 'cormorantbold';
+  }
+}
+
+.grid-offset(@type, @colnum){
+    @{type}: 100% / 12 * @colnum;
+}
+
+.line() {
+  content: '';
+  display: block;
+  height: @lh;
+  width: 30px;
+  margin-bottom: @mt;
+}
+
+.font-size(@mysizeValue) {
+  @sizeValue: @mysizeValue / @basefontsize;
+  @remValue: @sizeValue;
+  @pxValue: (@sizeValue * 10);
+  font-size: ~"@{pxValue}px"; 
+  font-size: ~"@{remValue}rem";
+}
+
+.line-height(@mysizeValue) {
+  @sizeValue: @mysizeValue / @basefontsize;
+  @remValue: @sizeValue;
+  @pxValue: (@sizeValue * 10);
+  line-height: ~"@{pxValue}px"; 
+  line-height: ~"@{remValue}rem";
+}
+
+.rft(@mysizeValue-min, @mysizeValue-max) {
+
+  @delta: @mysizeValue-max - @mysizeValue-min;
+  @step: @delta / 3;
+
+  .font-size(@mysizeValue-min);
+
+  @media (min-width: @screen-sm-min) {
+    .font-size(@mysizeValue-max - @step * 2);
+  }
+  @media (min-width: @screen-md-min) {
+    .font-size(@mysizeValue-max - @step);
+  }
+  @media (min-width: @screen-lg-min) {
+    .font-size(@mysizeValue-max);
+  }
+}
+
+.c() {
+  .container();
+
+  @media (min-width: @min-xl) {
+    width: @min-xl - 30;
+  }
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fc {
+  max-width: none;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.load-more-button() {
+  border: #231f20 1px solid;
+  border-radius: 0;
+  color: #231f20;
+  .f('m');
+  .font-size(28);
+  padding: 10px 35px;
+  text-decoration: none;
+  background-color: transparent;
+
+  &:hover {
+   // background-color: @gg-blue;
+    //border-color: @gg-blue;
+    //color: @on-dark;
+  }
+}
+
+/*
+X * S / 1000 = P
+X is equal to the letter-tracking value in Photoshop
+S is the font-size in pixels
+P is the resulted value in "px" to use in CSS*/
+.letter-spacing(@x, @s) {
+  letter-spacing: @x * @s / 1000 * 1px;
+}
+
+.ion() {
+  display: inline-block;
+  font-family: 'Ionicons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.more-button() {
+  text-transform: uppercase;
+  padding: 15px 20px;
+  border: #e1e2e4 1px solid;
+  border-radius: 3px;
+  background: transparent;
+  text-decoration: none;
+
+  &:after {
+    content: '\f3d6';
+    .ion();
+    margin-left: 15px;
+  }
+
+  &:hover {
+    border-color: @mkdb-blue;
+    background-color: @mkdb-blue;
+    color: white;
+  }
+}
+
+.border-left() {
+  @p: 25px;
+
+  @media (min-width: @screen-md-min) {
+    border-left: @mkdb-line 1px solid;
+    padding-left: @p;
+    margin-left: -1 * @p;
+  }
+}
+
+.dots() {
+  content: '';
+  width: 118px;
+  height: 71px;
+  display: block;
+  position: absolute;
+  //left: -110px;
+  top: 50%;
+  transform: translateY(-50%);
+  //background: url('../images/dots-left-1.png') no-repeat center center;
+  background-size: contain;
+}
