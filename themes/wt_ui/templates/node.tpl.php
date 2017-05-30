@@ -78,65 +78,6 @@
  *
  * @ingroup templates
  */
-
-$ntype = $node->type;
-
-if (($ntype == 'page_tab' || $ntype == 'region' || $ntype == 'hotel') && isset($node->field_paren_node)) {
-  $parent_nid = $node->field_paren_node['und'][0]['target_id'];
-}
-
-if ($ntype == 'tour' && isset($node->field_tour_country)) {
-  $parent_nid = $node->field_tour_country['und'][0]['target_id'];
-}
-
-if ($ntype == 'country') {
-  $parent_nid = $node->nid;
-  //$ntitle = $title . ' - информация о стране'; todo
-}
-
-$alias = drupal_get_path_alias('node/' . $parent_nid );
-
-$query = db_select('field_data_field_paren_node', 'pn');
-$query->innerJoin('field_data_field_tab_type', 'tt', 'pn.entity_id = tt.entity_id');
-$query->fields('pn', array('entity_id'));
-$query->fields('tt', array('field_tab_type_value'));
-$query->condition('pn.field_paren_node_target_id', $parent_nid);
-$query->orderBy('tt.field_tab_type_value');
-$nodes = $query->execute()->fetchAll();
-
-$qlinks = '<ul>';
-foreach ($nodes as $row) {
-  if ($row->field_tab_type_value == 'Спецпредложения / Цены') {
-    $qlinks = $qlinks . '<li><a href="/node/' . $row->entity_id .'">' . $row->field_tab_type_value . '</a></li>'; //проверять не пустое ли боди
-  }
-}
-$qlinks = $qlinks . '<li><a href="/node/' . $parent_nid .'">Информация о стране</a></li>';
-foreach ($nodes as $row) {
-  if ($row->field_tab_type_value != 'Спецпредложения / Цены') {
-    $lnode = node_load($row->entity_id);
-    if(count($lnode->body) > 0) {
-      $qlinks = $qlinks . '<li><a href="/node/' . $row->entity_id . '">' . $row->field_tab_type_value . '</a></li>'; //проверять не пустое ли боди
-    }
-  }
-}
-
-$qlinks = $qlinks . '<li><a href="/' . $alias . '/hotels">Отели</a>';
-$qlinks = $qlinks . '</ul>';
-
-
-$query = db_select('field_data_field_paren_node', 'pn');
-$query->fields('pn', array('entity_id'));
-$query->condition('pn.field_paren_node_target_id', $parent_nid);
-$query->condition('pn.bundle', 'region');
-$result = $query->execute()->fetchAll();
-
-$qlinks2 = '<ul>';
-foreach($result as $rows) {
-  $rnode = node_load($rows->entity_id);
-  $qlinks2 = $qlinks2 . '<li><a href="/node/' . $rows->entity_id .'">' . $rnode->title . '</a></li>';
-}
-$qlinks2 = $qlinks2 . '</ul>';
-
 ?>
 <article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php if ((!$page && !empty($title)) || !empty($title_prefix) || !empty($title_suffix) || $display_submitted): ?>
@@ -159,89 +100,13 @@ $qlinks2 = $qlinks2 . '</ul>';
     hide($content['comments']);
     hide($content['links']);
     hide($content['field_tags']);
-    print $qlinks;
-  print '<p>---------------------</p>';
-    print $qlinks2;
 
-  //dsm($node);
-  if ( ($ntype == 'page_tab' && isset($node->field_paren_node) && $node->field_tab_type['und'][0]['value'] == 'Спецпредложения / Цены') || ($ntype = 'region' && isset($node->field_paren_node))) {
-    $n = date('Y-m-d 00:00:00');
+  
+    print wt_nodetabs($node);
+    print '<p>---------------------</p>';
+    print wt_noderegions($node);
 
-    $my_field = field_info_field('field_tour_type');
-    $allowed_values = list_allowed_values($my_field);
-
-    foreach ($allowed_values as $key=>$value){
-     //dsm($key,$key);
-
-      $query = db_select('node', 'n');
-      $query->innerJoin('field_data_field_tour_country', 'c', 'c.entity_id = n.nid');
-      $query->innerJoin('field_data_field_tour_type', 't', 't.entity_id = n.nid');
-      $query->fields('n', array('nid'));
-      $query->condition('n.type', 'tour');
-      $query->condition('n.status', 1);
-      $query->condition('c.field_tour_country_target_id', $parent_nid);
-      $query->condition('t.field_tour_type_value', $key);
-      $result = $query->execute()->fetchAll();
-
-      $tlist = array();
-      foreach ($result as $row) {
-        $ltour = node_load($row->nid);
-        if($ltour->field_tour_date['und'][0]['value2'] >= $n) {
-         // dsm($ltour);
-          if(!in_array($ltour, $tlist)){
-            array_push($tlist, $ltour);
-          }
-
-        }
-      }
-
-      if (count($tlist) > 0) {
-
-        $output = '<a role="button" data-toggle="collapse" href="#tour-type-' . $key . '" aria-controls="tour-type-' . $key . '">';
-        $output = $output . $value . '</a>';
-        $output = $output . '<div class="collapse in" id="tour-type-' . $key . '"><div class="well"><table class="table">';
-
-        foreach ($tlist as $list) {
-          //$output = $output . $list->title . $list->nid;
-
-
-          $output = $output . '<tr>';
-          $output = $output . '<td><a href="/node/' . $list->nid . '" title="' . $list->field_old_tour_id['und'][0]['value'] . '">' . $list->title . '</a><br>' . substr($list->field_tour_date['und'][0]['value'], 0, -8)  . ' - ' . substr($list->field_tour_date['und'][0]['value2'], 0, -8) . ' от ' . $list->field_tour_price['und'][0]['value'] . '</td>';
-          $output = $output . '<td>' . strip_tags($list->body['und'][0]['summary']) . '<br>Продолжительность тура ' . $list->field_tour_days['und'][0]['safe_value'] . '</td>';
-
-          if(count($list->field_tour_file) > 0) {
-            $file = file_load($list->field_tour_file['und'][0]['fid']);
-            $uri = $file->uri;
-            $url = file_create_url($uri);
-
-            if ($url) {
-              $output = $output . '<td>' . '<a href="' . $url . '">Скачать ПДФ</a></td>';
-            } else {
-              $output = $output . '<td></td>';
-            }
-          }
-
-          $output = $output . '</tr>';
-
-
-
-        }
-
-        $output = $output . '</table></div></div>';
-
-        print $output;
-
-      }
-
-    }
-
-
-
-
-  }
-
-
-
+    print wt_tours($node);
 
     print render($content);
   ?>
