@@ -1,9 +1,5 @@
 <?php
 
-/**
-* Implements hook_block_info().
-*/
-
 module_load_include('inc', 'wt', 'wt.adminmessages');
 
 function wt_menu(){
@@ -19,6 +15,7 @@ function wt_menu(){
         'access callback' => TRUE,
     );
 
+    //page for admin batch tasks, such as update node, import, etc
     $items['admin/wt/i'] = array(
         'title' => 'i',
         'description' => 'i',
@@ -29,11 +26,12 @@ function wt_menu(){
         'access callback' => TRUE,
     );
 
+    //у нас нет отдельной ноды которая собирает отели страны, так что сделаем виртуальную
     $items['countries/%/hotels'] = array(
         'title' => 'Hotels of',
         'page callback' => 'wt_hotels',
         'page arguments' => array(1),
-        'access arguments' => array('access content'), // whatever see above
+        'access arguments' => array('access content'),
         'type' => MENU_CALLBACK
     );
 
@@ -53,42 +51,44 @@ function wt_nodetabs($node) {
 
     if ($ntype == 'country') {
         $parent_nid = $node->nid;
-        //$ntitle = $title . ' - информация о стране'; todo
     }
 
-    $alias = drupal_get_path_alias('node/' . $parent_nid );
+    if ($parent_nid) {
+        $alias = drupal_get_path_alias('node/' . $parent_nid );
 
-    $query = db_select('field_data_field_paren_node', 'pn');
-    $query->innerJoin('field_data_field_tab_type', 'tt', 'pn.entity_id = tt.entity_id');
-    $query->fields('pn', array('entity_id'));
-    $query->fields('tt', array('field_tab_type_value'));
-    $query->condition('pn.field_paren_node_target_id', $parent_nid);
-    $query->orderBy('tt.field_tab_type_value');
-    $nodes = $query->execute()->fetchAll();
+        //найдем все табы которые имеют родителем эту страну
+        $query = db_select('field_data_field_paren_node', 'pn');
+        $query->innerJoin('field_data_field_tab_type', 'tt', 'pn.entity_id = tt.entity_id');
+        $query->fields('pn', array('entity_id'));
+        $query->fields('tt', array('field_tab_type_value'));
+        $query->condition('pn.field_paren_node_target_id', $parent_nid);
+        $query->orderBy('tt.field_tab_type_value');
+        $nodes = $query->execute()->fetchAll();
 
-    $qlinks = '<ul>';
+        $qlinks = '<ul>';
 
-    foreach ($nodes as $row) {
-        if ($row->field_tab_type_value == 'Спецпредложения / Цены') {
-            $qlinks = $qlinks . '<li><a href="/node/' . $row->entity_id .'">' . $row->field_tab_type_value . '</a></li>'; //проверять не пустое ли боди
-        }
-    }
-
-    $qlinks = $qlinks . '<li><a href="/node/' . $parent_nid .'">Информация о стране</a></li>';
-
-    foreach ($nodes as $row) {
-        if ($row->field_tab_type_value != 'Спецпредложения / Цены') {
-            $lnode = node_load($row->entity_id);
-            if(count($lnode->body) > 0) {
-                $qlinks = $qlinks . '<li><a href="/node/' . $row->entity_id . '">' . $row->field_tab_type_value . '</a></li>'; //проверять не пустое ли боди
+        foreach ($nodes as $row) {
+            if ($row->field_tab_type_value == 'Спецпредложения / Цены') {
+                $qlinks = $qlinks . '<li><a href="/node/' . $row->entity_id .'">' . $row->field_tab_type_value . '</a></li>';  //todo проверять не пустое ли боди, нам тогда не нужно наверное показывать пустой таб
             }
         }
+
+        $qlinks = $qlinks . '<li><a href="/node/' . $parent_nid .'">Информация о стране</a></li>';
+
+        foreach ($nodes as $row) {
+            if ($row->field_tab_type_value != 'Спецпредложения / Цены') {
+                $lnode = node_load($row->entity_id);
+                if(count($lnode->body) > 0) {
+                    $qlinks = $qlinks . '<li><a href="/node/' . $row->entity_id . '">' . $row->field_tab_type_value . '</a></li>'; //todo проверять не пустое ли боди ^^
+                }
+            }
+        }
+
+        $qlinks = $qlinks . '<li><a href="/' . $alias . '/hotels">Отели</a>';
+        $qlinks = $qlinks . '</ul>';
+
+        return $qlinks;
     }
-
-    $qlinks = $qlinks . '<li><a href="/' . $alias . '/hotels">Отели</a>';
-    $qlinks = $qlinks . '</ul>';
-
-    return $qlinks;
 }
 
 function wt_noderegions($node) {
@@ -104,44 +104,36 @@ function wt_noderegions($node) {
 
     if ($ntype == 'country') {
         $parent_nid = $node->nid;
-        //$ntitle = $title . ' - информация о стране'; todo
     }
 
-    $query = db_select('field_data_field_paren_node', 'pn');
-    $query->fields('pn', array('entity_id'));
-    $query->condition('pn.field_paren_node_target_id', $parent_nid);
-    $query->condition('pn.bundle', 'region');
-    $result = $query->execute()->fetchAll();
+    if ($parent_nid) {
+        $query = db_select('field_data_field_paren_node', 'pn');
+        $query->fields('pn', array('entity_id'));
+        $query->condition('pn.field_paren_node_target_id', $parent_nid);
+        $query->condition('pn.bundle', 'region');
+        $result = $query->execute()->fetchAll();
 
-    $qlinks2 = '<ul>';
+        $qlinks2 = '<ul>';
 
-    foreach($result as $rows) {
-        $rnode = node_load($rows->entity_id);
-        $qlinks2 = $qlinks2 . '<li><a href="/node/' . $rows->entity_id .'">' . $rnode->title . '</a></li>';
+        foreach($result as $rows) {
+            $rnode = node_load($rows->entity_id);
+            $qlinks2 = $qlinks2 . '<li><a href="/node/' . $rows->entity_id .'">' . $rnode->title . '</a></li>';
+        }
+
+        $qlinks2 = $qlinks2 . '</ul>';
+
+        return $qlinks2;
     }
 
-    $qlinks2 = $qlinks2 . '</ul>';
-
-    return $qlinks2;
 }
 
+//сформировать туры для страны (пока на старом сайте туры не привязаны к региону
 function wt_tours($node) {
     $ntype = $node->type;
 
-    if (($ntype == 'page_tab' || $ntype == 'region' || $ntype == 'hotel') && isset($node->field_paren_node)) {
-        $parent_nid = $node->field_paren_node['und'][0]['target_id'];
-    }
-
-    if ($ntype == 'tour' && isset($node->field_tour_country)) {
-        $parent_nid = $node->field_tour_country['und'][0]['target_id'];
-    }
-
-    if ($ntype == 'country') {
-        $parent_nid = $node->nid;
-        //$ntitle = $title . ' - информация о стране'; todo
-    }
-
+    //туры показывать на табе "спецпредложения" или на ноде типа "регион"
     if (($ntype == 'page_tab' && isset($node->field_paren_node) && $node->field_tab_type['und'][0]['value'] == 'Спецпредложения / Цены') || ($ntype == 'region' && isset($node->field_paren_node))) {
+        $parent_nid = $node->field_paren_node['und'][0]['target_id'];
         $n = date('Y-m-d 00:00:00');
 
         $my_field = field_info_field('field_tour_type');
@@ -164,6 +156,7 @@ function wt_tours($node) {
 
             foreach ($result as $row) {
                 $ltour = node_load($row->nid);
+
                 if($ltour->field_tour_date['und'][0]['value2'] >= $n) {
                     if(!in_array($ltour, $tlist)){
                         array_push($tlist, $ltour);
@@ -171,6 +164,7 @@ function wt_tours($node) {
                 }
             }
 
+            //todo переписать немного используя темплейт
             if (count($tlist) > 0) {
                 $output = '<a role="button" data-toggle="collapse" href="#tour-type-' . $key . '" aria-controls="tour-type-' . $key . '">';
                 $output = $output . $value . '</a>';
@@ -205,6 +199,7 @@ function wt_tours($node) {
     }
 }
 
+//сформировать отели страны
 function wt_hotels($arg1) {
     $cNid = db_select('url_alias', 'a')
         ->fields('a', array('source'))
@@ -259,6 +254,7 @@ function wt_form_alter(&$form, $form_state, $form_id) {
     }
 }
 
+//функция различных старых таск которые я использовал для миграции контента
 function wt_i_form_submit($form, &$form_state) {
     // Подготавливаем данные для операций
    /* $query = db_select('node', 'n');
