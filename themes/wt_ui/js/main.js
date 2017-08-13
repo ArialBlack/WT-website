@@ -30,7 +30,7 @@
         function buildMultyCarousel() {
             // Instantiate the Bootstrap carousel
 
-            // for every slide in carousel, copy the next slide's item in the slide.
+            // for every ` in carousel, copy the next slide's item in the slide.
             // Do the same for the next, next item.
             $('#block-views-slider-portfolio-block-1 .carousel .item').each(function(){
                 var next = $(this).next();
@@ -61,6 +61,30 @@
                     scrollTop: $(id).offset().top
                 }, 1000);
             });
+
+            // for (var n = 1; n<10; n++) {
+            //   var carItem ='.carousel-inner .item:nth-child(' + n + ') p';
+            //   if ($(carItem).Height() > 210) {
+            //     $(carItem).css('font-size', '22px');
+            //   }
+            // }
+
+
+            $(".node-type-tour .nav.nav-pills.nav-justified, .page-node .nav.nav-pills.nav-justified").on("click","a", function (event) {
+
+              event.preventDefault();
+
+              var id  = $(this).attr('href'),
+
+                top = $(id).offset().top;
+
+              $('body,html').animate({scrollTop: top}, 1000);
+            });
+
+            // if ($(window).width() <= 1260) {
+            //   $('.page-contacts .geofieldMap.geofield-processed-processed').css('width', '620px !important');
+            // };
+
         });
 
         $(window).load(function() {
@@ -70,6 +94,5 @@
         $(window).resize(function () {
             calcSizes();
         });
-
         }); // end of document ready
 })(jQuery); // end of jQuery name space

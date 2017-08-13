@@ -1,0 +1,226 @@
+//footer.footer {
+//  position: relative;
+//  background-color: @dark-blue-2 ;
+//
+//  #block-menu-block-2,
+//  #block-menu-block-3,
+//  #block-menu-menu-footer-menu-center,
+//  #block-block-2,
+//  #block-multiblock-1 {
+//    display: inline-block;
+//    margin-left: 8.333333%;
+//    float: left;
+//  }
+//
+//
+//  #block-menu-block-2,
+//  #block-menu-menu-footer-menu-center {
+//    width: 8.333333%;
+//
+//    li a {
+//      font-family: @Rr;
+//      font-size: @base2fontsize;
+//      color: @white;
+//      text-transform: uppercase;
+//      margin: 5px auto;
+//
+//      &:hover {
+//        background-color: rgba(238, 238, 238, .1);
+//        border-radius: 5px;
+//
+//      }
+//    }
+//  }
+//
+//  #block-menu-block-3 {
+//
+//    .block-title {
+//      font-family: @Rr;
+//      font-size: @base2fontsize;
+//      color: @white;
+//      text-transform: uppercase;
+//    }
+//
+//    .views-view-grid.cols-2 {
+//      width: 100%;
+//    }
+//
+//    .views-view-grid.cols-2 .field-content a {
+//      font-family: @Rl;
+//      font-size: @base4fontsize;
+//      color: @white;
+//      opacity: .5;
+//    }
+//
+//    .col-2.col-last {
+//      padding-left: 20%;
+//    }
+//
+//    tr {
+//      line-height: 24px;
+//    }
+//  }
+//
+//  #block-block-2 {
+//    width: ~'calc(8.333333% * 2)';
+//    margin-top: 60px;
+//
+//
+//    p {
+//      position: relative;
+//      font-family: @Lg;
+//      font-size: @base4fontsize;
+//      color: @white;
+//      margin-bottom: 3px;
+//      padding-left: 25px;
+//
+//      &:first-child:before {
+//        position: absolute;
+//        content: '';
+//        top:4px;
+//        left:0;
+//        width:16px;
+//        height: 16px;
+//        background: url(../images/icons/yellow-geo.png) no-repeat;
+//      }
+//    }
+//
+//    .footer-icons-block {
+//      margin-top: 17px;
+//      padding-left: 25px;
+//
+//      span a {
+//        color: @white;
+//        font-size: 18px;
+//        margin-right: 10px;
+//      }
+//    }
+//  }
+//
+//  #block-multiblock-1 {
+//    position: relative;
+//    font-family: @Lg;
+//    font-size: @base4fontsize;
+//    color: @white;
+//    padding-left: 25px;
+//
+//    &:before {
+//      position: absolute;
+//      content: '';
+//      top:4px;
+//      left:0;
+//      width:16px;
+//      height: 16px;
+//      background: url(../images/icons/yellow-phone.png) no-repeat;
+//    }
+//  }
+//}
+
+footer.footer {
+  position: relative;
+  background-color: @dark-blue-2 ;
+
+  #block-menu-block-2,
+  #block-menu-menu-footer-menu-center {
+
+    li a {
+      font-family: @Rr;
+      font-size: @base2fontsize;
+      color: @white;
+      text-transform: uppercase;
+      margin: 5px auto;
+      max-width: 130px;
+      clear: both;
+      float: left;
+
+      &:hover {
+        background-color: rgba(238, 238, 238, .1);
+        border-radius: 5px;
+      }
+    }
+  }
+
+  #block-menu-block-3 {
+    padding-top: 18px;
+
+    .block-title {
+      font-family: @Rr;
+      font-size: @base2fontsize;
+      color: @white;
+      text-transform: uppercase;
+    }
+
+    .views-view-grid.cols-2 {
+      width: 100%;
+    }
+
+    .views-view-grid.cols-2 .field-content a {
+      font-family: @Rl;
+      font-size: @base4fontsize;
+      color: @white;
+      opacity: .5;
+    }
+
+    .col-2.col-last {
+      padding-left: 20%;
+    }
+
+    tr {
+      line-height: 24px;
+    }
+  }
+
+  #block-multiblock-1 {
+    position: relative;
+    margin-top: 15px;
+    font-family: @Lg;
+    font-size: @base4fontsize;
+    color: @white;
+    padding-left: 25px;
+
+    &:before {
+      position: absolute;
+      content: '';
+      top:4px;
+      left:0;
+      width:16px;
+      height: 16px;
+      background: url(../images/icons/yellow-phone.png) no-repeat;
+    }
+  }
+
+
+  #block-block-2 {
+    padding-top: 10px;
+
+        p {
+          position: relative;
+          font-family: @Lg;
+          font-size: @base4fontsize;
+          color: @white;
+          margin-bottom: 3px;
+          padding-left: 25px;
+
+          &:first-child:before {
+            position: absolute;
+            content: '';
+            top:4px;
+            left:0;
+            width:16px;
+            height: 16px;
+            background: url(../images/icons/yellow-geo.png) no-repeat;
+          }
+        }
+
+        .footer-icons-block {
+          margin-top: 17px;
+          padding-left: 25px;
+
+          span a {
+            color: @white;
+            font-size: 18px;
+            margin-right: 10px;
+          }
+        }
+      }
+}

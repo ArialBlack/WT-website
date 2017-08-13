@@ -1,0 +1,829 @@
+  .node-type-tour {
+    background: @body-back-1;
+
+  .page-header {
+    position: absolute;
+    left: 250px;
+    top: 270px;
+    color: @light-gray;
+    font-family: @Ar;
+    font-size: 72px;
+    width: 55%;
+    z-index: 11;
+    border: none;
+
+    @media (max-width: @min-xl) {
+      font-size: 59px;
+    }
+  }
+
+  #countryCarousel {
+    .carousel-inner .item {
+      p {
+        position: absolute;
+        left: 255px;
+        top: 370px;
+        font-family: @Rr;
+        font-size: 24px;
+        color: @white;
+        width: 50%;
+        z-index: 11;
+        max-height: 238px;
+        overflow-y: hidden;
+        max-height: 238px;
+        overflow-y: hidden;
+      }
+
+      img {
+        height: 860px !important;
+      }
+
+      .book-tour {
+        .yellow-button;
+        text-transform: uppercase;
+        position: absolute;
+        z-index: 11;
+        left: 255px;
+        bottom: 190px;
+      }
+
+      .back-tour-search {
+        position: absolute;
+        bottom: 140px;
+        left: 275px;
+        font-family: @Rr;
+        font-size: @base3fontsize;
+        color: @white;
+        text-transform: uppercase;
+        z-index: 11;
+
+        &:before {
+          content: '🡐';
+          font-size: 25px;
+          position: absolute;
+          left: -24.5px;
+          top: -7.3px;
+        }
+      }
+
+      &:before {
+        content: '';
+        position: absolute;
+        z-index: 8;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    .left.carousel-control {
+      span:before {
+        content: none;
+      }
+
+      opacity: 1;
+      background-image: url(http://wt-website-2.dev/sites/all/modules/vscc/images/black_arrow_left.png);
+      width: 60px;
+      height: 60px;
+      top: initial;
+      left: initial;
+      bottom: 140px;
+      right: 310px;
+    }
+
+    .right.carousel-control {
+      span:before {
+        content: none;
+      }
+
+      opacity: 1;
+      background-image: url(http://wt-website-2.dev/sites/all/modules/vscc/images/black_arrow_right.png);
+      width: 60px;
+      height: 60px;
+      top: initial;
+      left: initial;
+      bottom: 140px;
+      right: 240px;
+    }
+  }
+
+  #block-system-main {
+    .nav.nav-pills.nav-justified {
+      .phantom-container;
+      margin-top: 40px;
+      padding: 40px 60px;
+      background: @white;
+      -webkit-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+      -moz-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+      box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+
+      li {
+
+        &.active {
+          a {
+            &:before {
+              content: '';
+              position: absolute;
+              width: 96%;
+              height: 2px;
+              left: 2%;
+              bottom: -41px;
+              background: @yellow;
+            }
+          }
+        }
+
+        a {
+          padding: 0;
+          background: none;
+          color: @dark-gray;
+          text-transform: uppercase;
+          font-family: @Rr;
+          font-size: @base2fontsize;
+        }
+      }
+    }
+
+    #base-info {
+      .phantom-container;
+
+      margin-top: 100px;
+
+      .col-md-9 {
+        padding-left: 0;
+        .inner {
+          background: @white;
+          padding: 60px 50px 50px 50px;
+          -webkit-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+          -moz-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+          box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+          width: ~'calc(100% - 45px)';
+        }
+
+        .field-name-field-tour-route,
+        .field-name-field-tour-type {
+          .field-label {
+            font-family: @Rr;
+            font-size: @base2fontsize;
+            color: @dark-blue-2;
+          }
+
+          .field-items,
+          .field-items p {
+            font-family: @Rl;
+            font-size: @base2fontsize;
+            color: @dark-blue-2;
+          }
+        }
+
+        div {
+          span:first-child {
+            font-family: @Rr;
+            font-weight: bold;
+          }
+
+          span {
+            font-family: @Rl;
+            font-size: @base2fontsize;
+            color: @dark-blue-2;
+          }
+
+          .field-type-text-with-summary {
+            p {
+              display: inline-block;
+            }
+          }
+        }
+      }
+
+      .col-md-3 .row:first-child {
+        background: @white;
+        padding: 40px 10px;
+        -webkit-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+        -moz-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+        box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+
+        li a {
+          font-family: @Rr;
+          font-size: @base3fontsize;
+          text-transform: uppercase;
+          text-decoration: underline;
+          color: @dark-blue-1;
+
+          &:hover {
+            color: @red;
+            background: none;
+          }
+        }
+      }
+
+      .col-md-3 .row:nth-child(2) {
+        background: @red;
+        margin-top: 20px;
+
+        span {
+          font-family: @Rr;
+          color: @light-gray;
+          display: block;
+          font-size: @base2fontsize;
+
+          &.manager-name {
+            font-family: @Ar;
+          }
+
+          &.manager {
+            font-size: @base4fontsize;
+          }
+        }
+      }
+    }
+
+    #steps {
+      .phantom-container;
+      margin-top: 90px;
+
+      .col-md-12 h2 {
+        font-family: @Ar;
+        font-size: @titlefontsize;
+        color: @dark-gray;
+        margin: auto;
+        text-align: center;
+      }
+
+      .panel-group {
+        float: left;
+        margin-top: 50px;
+
+        .panel.panel-default,
+        .panel-heading,
+        .panel-body {
+          border: none;
+        }
+
+        .panel.panel-default {
+          background: @white;
+          padding: 60px 50px;
+          margin: 20px auto;
+          float: left;
+          width: 100%;
+          -webkit-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+          -moz-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+          box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+        }
+
+        .panel-heading {
+          background: none;
+
+          a {
+            font-family: @Ar;
+            font-size: @subtitlefontsize;
+            color: @dark-gray;
+
+
+            span {
+              font-family: @Rb;
+              font-size: @subtitlefontsize;
+              color: @yellow;
+              -webkit-transition: color .4s ease;
+              -moz-transition: color .4s ease;
+              -ms-transition: color .4s ease;
+              -o-transition: color .4s ease;
+              transition: color .4s ease;
+            }
+
+            &:hover {
+              span {
+                color: darken(@yellow, 5);
+              }
+            }
+
+            &:hover,
+            &:visited,
+            &:active,
+            &:focus {
+              text-decoration: none;
+            }
+          }
+        }
+
+        .panel-body {
+          p {
+            width: 45%;
+            display: inline-block;
+
+            &:nth-child(2) {
+              margin-left: 4%;
+            }
+          }
+        }
+      }
+    }
+
+    .carousel.slide.tour-gallery {
+      width: 63%;
+      max-height: 740px;
+      margin: auto;
+      margin-top: 55px;
+
+      &>h2 {
+        padding-bottom: 65px;
+        font-family: @Ar;
+        font-size: @titlefontsize;
+        color: @dark-gray;
+        margin: auto;
+        text-align: center;
+      }
+
+      .img-responsive {
+        max-height: 590px;
+      }
+
+      .left.carousel-control {
+        span:before {
+          content: none;
+        }
+
+        opacity: 1;
+        background-image: url(http://wt-website-2.dev/sites/all/modules/vscc/images/black_arrow_left.png);
+        width: 60px;
+        height: 60px;
+        top: initial;
+        left: initial;
+        bottom: -20px;
+        right: 40px;
+      }
+
+      .right.carousel-control {
+        span:before {
+          content: none;
+        }
+
+        opacity: 1;
+        background-image: url(http://wt-website-2.dev/sites/all/modules/vscc/images/black_arrow_right.png);
+        width: 60px;
+        height: 60px;
+        top: initial;
+        left: initial;
+        bottom: -20px;
+        right: -30px;
+      }
+    }
+
+    .panel.with-nav-tabs.panel-primary.in-cost {
+      .phantom-container;
+      margin-top: 100px;
+      background: none;
+      border: none;
+
+      &>h2 {
+        padding-bottom: 60px;
+        font-family: @Ar;
+        font-size: @titlefontsize;
+        color: @dark-gray;
+        margin: auto;
+        text-align: center;
+      }
+
+      .panel-heading {
+        border: none;
+        background: none;
+        padding-bottom: 0;
+        padding-left: 85px;
+
+        ul {
+          border: none;
+        }
+
+        li {
+
+          a {
+            padding-bottom: 20px;
+            background: none;
+            color: @dark-gray;
+            text-transform: uppercase;
+            font-family: @Rr;
+            font-size: @base2fontsize;
+            border: none;
+          }
+
+          &.active {
+            a {
+              &:before {
+                content: '';
+                position: absolute;
+                width: 90%;
+                height: 2px;
+                left: 5%;
+                bottom: -11px;
+                background: @red;
+                border: none;
+              }
+            }
+          }
+
+          &:first-child {
+            margin-right: 60px;
+
+            &:before {
+              content: '';
+              position: absolute;
+              left: -9px;
+              top: 12px;
+              width: 17px;
+              height: 17px;
+              background: url(../images/checkmark.png);
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+            }
+          }
+
+          &:nth-child(2):before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 12px;
+            width: 17px;
+            height: 17px;
+            background: url(../images/cross.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+      }
+
+      .panel-body {
+        border: solid 1px #ecebe4;
+        border-radius: 2px;
+        background: @white;
+        padding: 60px;
+
+        ul.tour-cost {
+          column-count: 2;
+
+          li.tour-cost,
+          li {
+            width: 80%;
+            font-family: @Rr;
+            font-size: @base2fontsize;
+            color: @dark-blue-1;
+            line-height: 75px;
+            list-style-type: none;
+            border-bottom: 2px solid #ecebe4;
+          }
+        }
+      }
+    }
+
+    &>h2 {
+      margin: auto;
+      margin-top: 120px;
+      text-align: center;
+      font-family: @Ar;
+      font-size: @titlefontsize;
+      color: @dark-gray;
+    }
+
+    #route-map {
+      .phantom-container;
+      margin-top: 60px;
+    }
+
+    #similar-tours {
+      &> h2 {
+        margin-top: 100px;
+        text-align: center;
+        font-family: @Ar;
+        font-size: @titlefontsize;
+        color: @dark-gray;
+      }
+
+      .view.view-countries-tours.view-id-countries_tours.view-display-id-block .view-content {
+        .phantom-container;
+
+        .views-view-grid.cols-4 {
+          margin-top: 60px;
+          width: 100%;
+
+          td {
+            display: inline-block;
+            width: 30%;
+            margin-right: 3%;
+            background: none;
+            border: 2px solid #ecebe4;
+            -webkit-transition: all .4s ease;
+            -moz-transition: all .4s ease;
+            -ms-transition: all .4s ease;
+            -o-transition: all .4s ease;
+            transition: all .4s ease;
+            background: @white;
+
+            .views-field-title {
+              margin-top: 15px;
+              padding-left: 25px;
+              padding-right: 25px;
+
+              a {
+                font-family: @Rr;
+                font-size: @basefontsize;
+                color: @dark-gray;
+                text-transform: uppercase;
+              }
+            }
+
+            .views-field-field-tour-star {
+              padding-left: 25px;
+            }
+
+            .views-field-field-tour-country,
+            .tour-route div,
+            .views-field-field-tour-days {
+              padding-left: 40px;
+            }
+
+            .views-field-field-tour-country,
+            .views-field-field-tour-days {
+              padding-top: 10px;
+              font-family: @Rr;
+              font-size: 18px;
+              font-weight: bold;
+              color: @dark-gray;
+            }
+
+            .views-field-field-tour-days {
+              padding-bottom: 35px;
+              position: relative;
+
+              &:before {
+                content: '';
+                position: absolute;
+                left: 7%;
+                bottom: 0;
+                width: 86%;
+                height: 2px;
+                background: #ecebe4;
+              }
+            }
+
+            .tour-route div p {
+              font-family: @Rr;
+              font-size: 14px;
+              color: @dark-gray;
+              opacity: .7;
+            }
+
+            .views-field-field-tour-price {
+              padding-left: 25px;
+              padding-top: 35px;
+              color: @dark-blue-2;
+              font-family: @Rr;
+              font-size: @basefontsize;
+
+              .price-label {
+                font-size: @base2fontsize;
+                color: #7c7c7c;
+              }
+
+              .currency {
+                font-size: 17px;
+                vertical-align: top;
+              }
+            }
+
+            .views-field-field-tour-type {
+              display: none;
+            }
+
+            .views-field-view-node {
+              position: relative;
+              margin-top: 30px;
+              margin-left: 25px;
+              margin-bottom: 30px;
+
+              a {
+                font-family: @Rr;
+                font-size: @base3fontsize;
+                color: @dark-blue-1;
+                text-transform: uppercase;
+                -webkit-transition: color .1s ease;
+                -moz-transition: color .1s ease;
+                -ms-transition: color .1s ease;
+                -o-transition: color .1s ease;
+                transition: color .1s ease;
+
+                &:after {
+                  content: '🡒';
+                  font-size: 22px;
+                  position: absolute;
+                  left: 138px;
+                  top: -5px;
+                }
+
+                &:hover {
+                  color: @red;
+                  text-decoration: none;
+                }
+              }
+            }
+
+            &:hover {
+              -webkit-box-shadow: 0px 0px 19px 6px rgba(0, 0, 0, 0.1);
+              -moz-box-shadow: 0px 0px 19px 6px rgba(0, 0, 0, 0.1);
+              box-shadow: 0px 0px 19px 6px rgba(0, 0, 0, 0.1);
+            }
+          }
+        }
+      }
+    }
+
+    #reviews {
+      &>h2 {
+        margin-top: 80px;
+        padding-bottom: 40px;
+        text-align: center;
+        font-family: @Ar;
+        font-size: @titlefontsize;
+        color: @dark-gray;
+      }
+
+      .view-id-fortourcomment {
+        .phantom-container;
+
+        .views-view-grid.cols-3 {
+          width: 100%;
+          position: relative;
+          height: 940px;
+
+          td {
+            position: absolute;
+            width:61%;
+            background: @white;
+            padding-bottom: 40px;
+            -webkit-box-shadow: 0px 0px 19px 6px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0px 0px 19px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 19px 6px rgba(0, 0, 0, 0.1);
+
+            .views-field.views-field-field-image {
+              img {
+                width: 100%;
+                max-height: 400px;
+              }
+            }
+
+            .views-field-title,
+            .views-field-field-tour-route,
+            .views-field-field-tour-date,
+            .views-field-field-tour-country,
+            .views-field-field-feedback-stoimost,
+            .views-field-field-field-field-feedback-prozh,
+            .views-field-field-tour-price,
+            .views-field-comment-body {
+              padding-left: 40px;
+
+            }
+
+            .views-field-field-tour-country {
+              display: none;
+            }
+
+            .views-field.views-field-title {
+              padding-top: 15px;
+
+              a {
+                font-family: @Rr;
+                font-size: @basefontsize;
+                color: @dark-gray;
+                text-transform: uppercase;
+              }
+            }
+
+            .views-field-field-tour-route {
+              padding-left: 65px;
+              position: relative;
+              padding-top: 10px;
+              padding-bottom: 10px;
+
+              &:before {
+                content: '';
+                position: absolute;
+                left: 47px;
+                top: 14px;
+                width: 18px;
+                height: 18px;
+                background: url(../images/icons/yellow-geo.png) no-repeat;
+              }
+
+              .views-label-field-tour-route {
+                font-family: @Rr;
+                font-size: @base2fontsize;
+                color: @dark-blue-2;
+              }
+
+              .field-content p {
+                font-family: @Rr;
+                font-size: @base4fontsize;
+                color: @dark-blue-2;
+                opacity:.7;
+              }
+            }
+
+            .views-field-field-tour-date,
+            .views-field-field-tour-date-1 {
+              padding-right: 0;
+              padding-bottom: 10px;
+              font-family: @Rr;
+              font-size: @base2fontsize;
+              color: @dark-blue-2;
+            }
+
+            .views-field-field-tour-date {
+              position: relative;
+              float: left;
+              padding-left: 65px;
+
+              &:before {
+                content: '';
+                position: absolute;
+                left: 41px;
+                top: 3px;
+                width: 18px;
+                height: 18px;
+                background: url(../images/icons/yellow_calend.png) no-repeat;
+                background-size: 93%;
+              }
+            }
+
+            .views-field-field-feedback-stoimost,
+            .views-field-field-field-field-feedback-prozh {
+              float: left;
+
+              .field-content {
+                float: left;
+              }
+            }
+
+            .views-label-field-feedback-stoimost,
+            .views-label-field-field-feedback-nasysch,
+            .views-label-field-field-field-feedback-prozh,
+            .views-label-field-obsluzhivanie {
+              float: left;
+              font-family: @Rr;
+              font-size: @base2fontsize;
+              color: @dark-blue-2;
+            }
+
+            .views-label-field-field-field-feedback-prozh,
+            .views-label-field-obsluzhivanie {
+              padding-bottom: 10px;
+            }
+
+            .views-field-field-tour-price {
+              padding-bottom: 10px;
+
+              .views-label-field-tour-price {
+                display: inline-block;
+                font-family: @Rr;
+                font-size: @base2fontsize;
+                color: #7c7c7c;
+              }
+
+              .field-content {
+                display: inline-block;
+                font-family: @Rr;
+                font-size: @basefontsize;
+                color: @dark-blue-2;
+              }
+            }
+
+            .views-field-comment-body p {
+              font-family: @Rl;
+              font-size: @base4fontsize;
+              color: @dark-blue-1;
+              opacity:.7;
+            }
+
+
+            &:first-child {
+              z-index: 5;
+              left: 31%;
+              transform: translateX(-50%);
+            }
+
+            &:nth-child(2) {
+              z-index: 7;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+
+            &:nth-child(3) {
+              z-index: 6;
+              left: 68%;
+              transform: translateX(-50%);
+            }
+          }
+        }
+      }
+    }
+  }
+}

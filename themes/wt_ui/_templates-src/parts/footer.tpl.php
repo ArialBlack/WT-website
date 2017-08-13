@@ -1,10 +1,12 @@
 <?php if (!empty($page['footer'])): ?>
     <footer class="footer ">
-      <div class="<?php print $container_class; ?>">
+      <div class= "<?php print $container_class; ?>">
        <div class="row">
-        <div class="col-md-1 footer-logo">
-          <a href="/"><img src="http://wt-website-2.dev/sites/default/files/logo_2.png"></a>
-        </div>
+      <div class="col-md-1 footer-logo">
+       <a href="/"><img src="http://wt-website-2.dev/sites/default/files/logo_2.png"></a>
+
+      </div>
+
 
         <?php if (!empty($page['footer']['menu_block_2'])): ?>
             <div class="col-md-2 col-md-offset-1">
@@ -47,3 +49,5 @@
     </footer>
 
 <?php endif; ?>
+
+

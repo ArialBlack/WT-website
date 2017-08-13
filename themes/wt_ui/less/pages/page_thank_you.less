@@ -1,0 +1,206 @@
+.page-thank-you {
+  background: #f4f4f4;
+
+  .views-slideshow-cycle-processed {
+    position: relative;
+    max-height: 820px;
+    overflow: hidden;
+
+    .views-slideshow-simple-pager.widget_pager.widget_pager_bottom.views_slideshow_pager_field.views-slideshow-pager-field-processed {
+      display: none;
+    }
+
+    .views-slideshow-cycle-main-frame-row.views_slideshow_cycle_slide.views_slideshow_slide {
+      width: 100%;
+      height: 100% !important;
+    }
+
+    .vscc-controls.vscc_controls {
+      position: absolute;
+      z-index: 999;
+      right: 240px;
+      bottom: 180px;
+
+      @media (max-width: 1350px) {
+        right: 150px;
+        bottom: 100px;
+      }
+
+      .vscc_controls_previous.vscc-previous-processed,
+      .vscc_controls_next.vscc-next-processed {
+        display: inline-block;
+      }
+
+      .vscc_controls_previous.vscc-previous-processed {
+        margin-right: 5px;
+      }
+    }
+
+    .views-slideshow-cycle-main-frame-row-item {
+
+      &:before {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      .views-field.views-field-field-country-images {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+
+        img {
+          height: 820px;
+        }
+      }
+
+      .views-field.views-field-title,
+      .views-field.views-field-field-tour-days,
+      .views-field.views-field-field-tour-price,
+      .views-field.views-field-nothing {
+        position: relative;
+        z-index: 10;
+      }
+
+      .views-field.views-field-title {
+        .phantom-container;
+
+        .field-content {
+          display: block;
+          width: 60%;
+          margin-top: 190px;
+
+          a {
+            font-family: @Ar;
+            font-size: 72px;
+            color: @light-gray;
+            width: 50%;
+
+            &:hover {
+              text-decoration: none;
+            }
+
+            @media (max-width: 1350px) {
+              font-size: 60px;
+            }
+
+            @media (max-width: @min-lg) {
+              font-size: 50px;
+            }
+          }
+
+          @media (max-width: 1350px) {
+            margin-top: 150px;
+          }
+        }
+      }
+
+      .views-field.views-field-field-tour-days {
+        .phantom-container;
+
+        .field-content {
+          padding-left: 35px;
+          display: block;
+          width: 50%;
+          margin-top: 20px;
+          font-family: @Rr;
+          font-size: @subtitlefontsize;
+          color: @light-gray;
+          line-height: 1.1;
+
+          &:before {
+            position: absolute;
+            content: '';
+            top: 6px;
+            left: 0;
+            height: 23px;
+            width: 22px;
+            background: url(../images/icons/yellow_calend.png) no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+      }
+
+      .views-field.views-field-field-tour-price {
+        .phantom-container;
+
+        .field-content {
+          display: block;
+          width: 50%;
+          margin-top: 50px;
+          font-family: @Rr;
+          font-size: @titlefontsize;
+          color: @white;
+
+        }
+      }
+
+      .views-field.views-field-nothing {
+        .phantom-container;
+        padding-top: 35px;
+
+        .field-content {
+          a {
+            .yellow-button;
+          }
+        }
+      }
+    }
+  }
+
+  .main-container {
+    .page-header {
+      display: none;
+    }
+
+    #block-system-main {
+      .view-id-thank_you {
+        .phantom-container;
+        background: @white;
+        margin-top: 55px;
+        margin-bottom: 100px;
+        padding-top: 115px;
+        padding-bottom: 160px;
+        text-align: center;
+
+        h1 {
+          font-family: @Ar;
+          font-size: @titlefontsize;
+          color: @dark-gray;
+        }
+
+        p {
+          font-family: @Rr;
+          font-size: @basefontsize;
+          color: @dark-gray;
+          opacity: .8;
+          padding-bottom: 80px;
+        }
+
+        a {
+          position: relative;
+          font-family: @Rr;
+          font-size: @base3fontsize;
+          color: @dark-blue-1;
+          text-transform: uppercase;
+
+          &:after {
+            content: '🡒';
+            font-size: 20px;
+            margin-left: 4px;
+            text-decoration: none;
+            position: absolute;
+            top: -6px;
+          }
+        }
+      }
+    }
+  }
+}

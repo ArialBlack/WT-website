@@ -1,0 +1,299 @@
+.html.front {
+  background: #f4f4f4;
+
+  .main-container {
+    #block-views-novosti-slideshow-block-3 {
+      .views-slideshow-cycle-processed {
+        position: relative;
+
+        .views-slideshow-simple-pager.widget_pager.widget_pager_bottom.views_slideshow_pager_field.views-slideshow-pager-field-processed {
+          display: none;
+        }
+
+        .views-slideshow-cycle-main-frame-row.views_slideshow_cycle_slide.views_slideshow_slide {
+          width: 100%;
+          height: 100% !important;
+
+          &:before {
+            content: '';
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+          }
+        }
+
+        .views-field.views-field-field-image.sales-slider-country-image img {
+          position: absolute;
+          top: 0;
+          height: 100%;
+          z-index: -1;
+        }
+
+        .views-field.views-field-body.sales-slider-body {
+          display: none;
+        }
+
+        .views-field.views-field-field-tour-country.sales-slider-country .field-content {
+          display: none;
+          font-family: @Ar;
+          font-size: 72px;
+          color: @light-gray;
+        }
+
+        .vscc-controls.vscc_controls {
+          position: absolute;
+          z-index: 999;
+          right: 240px;
+          bottom: 320px;
+
+          .vscc_controls_previous.vscc-previous-processed,
+          .vscc_controls_next.vscc-next-processed {
+            display: inline-block;
+          }
+
+          .vscc_controls_previous.vscc-previous-processed {
+            margin-right: 5px;
+          }
+        }
+      }
+      .indicators-slider {
+        position: absolute;
+        top: 203px;
+        z-index: 999;
+        right: 240px;
+      }
+
+      .views-slideshow-cycle-main-frame.views_slideshow_cycle_teaser_section {
+        max-height: 100% !important;
+      }
+    }
+
+    #block-menu-block-4 {
+      position: relative;
+      z-index: 10;
+      background-color: @white;
+      width: 1285px;
+      height: 430px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: -210px;
+      outline: 33px;
+      outline-style: solid;
+      outline-color: rgba(255, 255, 255, 0.3);
+
+
+      .block-title {
+        text-align: center;
+        font-family: @Ar;
+        font-size: @titlefontsize;
+        color: @dark-gray;
+        margin-top: 60px;
+      }
+
+      ul.menu.nav {
+        position: relative;
+        width: 59%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        margin: auto;
+        margin-top: 50px;
+
+        &:after {
+          content: ' ';
+          position: absolute;
+          height: 2px;
+          width: 83.5%;
+          bottom: 0;
+          left: 80px;
+          right: 0;
+          background-color: #ecebe4;
+        }
+
+        & > li {
+          z-index: 2;
+          margin-right: 40px;
+
+          &.active {
+            border-bottom: 2px solid @red;
+
+            a {
+              background: none;
+              font-family: @Rr;
+            }
+          }
+
+          &.open {
+            & > a {
+              background: rgba(0, 0, 0, .3);
+            }
+          }
+
+          a {
+            padding: 10px 5px 20px 5px;
+            color: @dark-gray;
+            text-transform: uppercase;
+            font-size: @base2fontsize;
+            font-family: @Rr;
+          }
+        }
+      }
+    }
+
+    #block-wt-mt-mt-search{
+      width: 1160px;
+      margin-top: -185px;
+      z-index: 11;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+
+      .form-control.form-select,
+      .form-control.form-text.required,
+      #edit-date-datepicker-popup-0 {
+        height: 50px;
+      }
+
+      #mt_destination .form-select,
+      #mt_country .form-select,
+      #mt_region .form-select {
+        display: inline-block;
+      }
+
+      #mt_destination .control-label,
+      #mt_country .control-label,
+      .container-inline-date .control-label {
+        font-family: @Rr;
+        font-size: @base2fontsize;
+      }
+
+      #mt_destination {
+        width: 28%;
+        padding-left: 0;
+        margin-left: 15px;
+
+        .form-select {
+          max-width: 215px;
+          margin-left: 15px;
+        }
+      }
+
+      #mt_country {
+        width: 22%;
+        padding-right: 10px;
+
+        .form-select {
+          max-width: 155px;
+          margin-left: 15px;
+        }
+      }
+
+      #mt_region {
+        width: 16.5%;
+        padding-left: 5px;
+        padding-right: 20px;
+
+        .form-select {
+          width: 100%;
+        }
+
+        .control-label {
+          display: none;
+        }
+      }
+
+      .container-inline-date {
+        display: inline-block;
+        margin-left: 20px;
+        width: 29.2%;
+        clear: none;
+
+        .form-item.form-item-date.form-type-date-popup.form-group {
+          margin-right: 0;
+        }
+
+        #edit-date {
+          margin-left: 20px;
+        }
+
+        .control-label {
+          float: left;
+          margin-left: 5px;
+          line-height: 50px;
+        }
+
+        .help-block {
+          display: none;
+        }
+
+        #edit-date-datepicker-popup-0 {
+          margin-right: 0;
+        }
+      }
+
+      div#days_from,
+      div#adults,
+      div#children,
+     #edit-submit {
+        float: left;
+        margin-top: 40px;
+
+        .control-label {
+          margin-right: 15px;
+          font-family: @Rr;
+          font-size: @base2fontsize;
+          float: left;
+          line-height: 50px;
+        }
+      }
+
+      #days_from {
+        .form-item-days-from {
+          margin-left: 15px;
+
+          input {
+            float: left;
+            width: 75px;
+          }
+        }
+
+        .form-item-days-to {
+          float: left;
+          margin-right: 40px;
+          .control-label {
+            display: none;
+          }
+
+          input {
+            width: 75px;
+            margin-left: 15px;
+          }
+        }
+      }
+
+      #adults,
+      #children {
+        input {
+          float: left;
+          width: 50px;
+        }
+
+      }
+      .form-item-children {
+        margin-left: 40px;
+      }
+
+      #edit-submit {
+        .yellow-button;
+
+        margin-left: 100px;
+        padding: 13px 50px;
+        text-transform: uppercase;
+      }
+    }
+  }
+}

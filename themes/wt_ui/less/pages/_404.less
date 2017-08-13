@@ -1,0 +1,375 @@
+.page-error-404 {
+  background: #f4f4f4;
+  .views-slideshow-cycle-processed {
+    position: relative;
+    max-height: 820px;
+    overflow: hidden;
+
+    .views-slideshow-simple-pager.widget_pager.widget_pager_bottom.views_slideshow_pager_field.views-slideshow-pager-field-processed {
+      display: none;
+    }
+
+    .views-slideshow-cycle-main-frame-row.views_slideshow_cycle_slide.views_slideshow_slide {
+      width: 100%;
+      height: 100% !important;
+    }
+
+    .vscc-controls.vscc_controls {
+      position: absolute;
+      z-index: 999;
+      right: 240px;
+      bottom: 180px;
+
+      @media (max-width: 1350px) {
+        right: 150px;
+        bottom: 100px;
+      }
+
+      .vscc_controls_previous.vscc-previous-processed,
+      .vscc_controls_next.vscc-next-processed {
+        display: inline-block;
+      }
+
+      .vscc_controls_previous.vscc-previous-processed {
+        margin-right: 5px;
+      }
+    }
+
+    .views-slideshow-cycle-main-frame-row-item {
+
+      &:before {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      .views-field.views-field-field-country-images {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+
+        img {
+          height: 820px;
+        }
+      }
+
+      .views-field.views-field-title,
+      .views-field.views-field-field-tour-days,
+      .views-field.views-field-field-tour-price,
+      .views-field.views-field-nothing {
+        position: relative;
+        z-index: 10;
+      }
+
+      .views-field.views-field-title {
+        .phantom-container;
+
+        .field-content {
+          display: block;
+          width: 60%;
+          margin-top: 190px;
+
+          a {
+            font-family: @Ar;
+            font-size: 72px;
+            color: @light-gray;
+            width: 50%;
+
+            &:hover {
+              text-decoration: none;
+            }
+
+            @media (max-width: 1350px) {
+              font-size: 60px;
+            }
+
+            @media (max-width: @min-lg) {
+              font-size: 50px;
+            }
+          }
+
+          @media (max-width: 1350px) {
+            margin-top: 150px;
+          }
+        }
+      }
+
+      .views-field.views-field-field-tour-days {
+        .phantom-container;
+
+        .field-content {
+          padding-left: 35px;
+          display: block;
+          width: 50%;
+          margin-top: 20px;
+          font-family: @Rr;
+          font-size: @subtitlefontsize;
+          color: @light-gray;
+          line-height: 1.1;
+
+          &:before {
+            position: absolute;
+            content: '';
+            top: 6px;
+            left: 0;
+            height: 23px;
+            width: 22px;
+            background: url(../images/icons/yellow_calend.png) no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+      }
+
+      .views-field.views-field-field-tour-price {
+        .phantom-container;
+
+        .field-content {
+          display: block;
+          width: 50%;
+          margin-top: 50px;
+          font-family: @Rr;
+          font-size: @titlefontsize;
+          color: @white;
+
+        }
+      }
+
+      .views-field.views-field-nothing {
+        .phantom-container;
+        padding-top: 35px;
+
+        .field-content {
+          a {
+            .yellow-button;
+          }
+        }
+      }
+    }
+  }
+
+  .views-slideshow-cycle-main-frame.views_slideshow_cycle_teaser_section {
+    max-height: 100% !important;
+  }
+
+  .view-id-error_404.view-display-id-page {
+    position: relative;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 80px 150px;
+    width: 1685px;
+
+    @media (max-width: 1750px) {
+      padding: 60px 35px;
+      width: 1455px;
+    }
+
+    @media (max-width: @min-xl) {
+      padding: 60px 110px;
+      width: 1350px;
+    }
+
+    @media (max-width: 1400px) {
+      padding: 10px 19px;
+      width: 1160px;
+    }
+
+    .view-header{
+      h3 {
+        font-family: @Ar;
+        font-size: @titlefontsize;
+        color: @dark-gray;
+        text-align: center;
+      }
+
+      p {
+        padding-bottom: 60px;
+        font-family: @Rr;
+        font-size: @basefontsize;
+        color: @dark-gray;
+        opacity:.8;
+        text-align: center;
+      }
+    }
+
+    .view-content {
+      .phantom-container;
+
+      .views-view-grid.cols-3 {
+        width: 100%;
+
+        tr {
+          display: flex;
+          margin-bottom: 50px;
+
+          td {
+            display: inline-block;
+            width: 30%;
+            margin-right: 3%;
+            background: none;
+            border: 2px solid #ecebe4;
+            -webkit-transition: all .4s ease;
+            -moz-transition: all .4s ease;
+            -ms-transition: all .4s ease;
+            -o-transition: all .4s ease;
+            transition: all .4s ease;
+            background: @white;
+
+            .views-field-title {
+              margin-top: 15px;
+              padding-left: 25px;
+              padding-right: 25px;
+
+              a {
+                font-family: @Rr;
+                font-size: @basefontsize;
+                color: @dark-gray;
+                text-transform: uppercase;
+              }
+            }
+
+            .views-field-field-tour-star {
+              padding-left: 25px;
+
+              .help-block {
+                display: none;
+              }
+            }
+
+            .views-field-field-tour-country,
+            .views-field.views-field-field-tour-route,
+            .views-field-field-tour-days {
+              padding-left: 40px;
+            }
+
+            .views-field-field-tour-country,
+            .views-field-field-tour-days {
+              padding-top: 10px;
+              font-family: @Rr;
+              font-size: 18px;
+              font-weight: bold;
+              color: @dark-gray;
+            }
+
+            .views-field-field-tour-days {
+              padding-bottom: 35px;
+              position: relative;
+
+              &:before {
+                content: '';
+                position: absolute;
+                left: 7%;
+                bottom: 0;
+                width: 86%;
+                height: 2px;
+                background: #ecebe4;
+              }
+
+              .field-content {
+                position: relative;
+
+                &:before {
+                  position: absolute;
+                  content: '';
+                  top: 4px;
+                  left: -21px;
+                  height: 16px;
+                  width: 16px;
+                  background: url(../images/icons/yellow_calend.png) no-repeat;
+                  background-size: 100% 100%;
+                }
+              }
+            }
+
+            .views-field-field-tour-country {
+              .field-content {
+                position: relative;
+
+                &:before {
+                  position: absolute;
+                  content: '';
+                  top: 4px;
+                  left: -18px;
+                  height: 16px;
+                  width: 13px;
+                  background: url(../images/icons/yellow-geo.png) no-repeat;
+                  background-size: 100% 100%;
+                }
+              }
+            }
+
+            .views-field.views-field-field-tour-route p {
+              font-family: @Rr;
+              font-size: 14px;
+              color: @dark-gray;
+              opacity: .7;
+            }
+
+            .views-field-field-tour-price {
+              padding-left: 25px;
+              padding-top: 35px;
+              color: @dark-blue-2;
+              font-family: @Rr;
+              font-size: @basefontsize;
+
+              .price-label {
+                font-size: @base2fontsize;
+                color: #7c7c7c;
+              }
+
+              .currency {
+                font-size: 17px;
+                vertical-align: top;
+              }
+            }
+
+            .views-field-view-node {
+              position: relative;
+              margin-top: 30px;
+              margin-left: 25px;
+              margin-bottom: 30px;
+
+              a {
+                font-family: @Rr;
+                font-size: @base3fontsize;
+                color: @dark-blue-1;
+                text-transform: uppercase;
+                -webkit-transition: color .1s ease;
+                -moz-transition: color .1s ease;
+                -ms-transition: color .1s ease;
+                -o-transition: color .1s ease;
+                transition: color .1s ease;
+
+                &:after {
+                  content: '🡒';
+                  font-size: 22px;
+                  position: absolute;
+                  left: 138px;
+                  top: -5px;
+                }
+
+                &:hover {
+                  color: @red;
+                  text-decoration: none;
+                }
+              }
+            }
+
+            &:hover {
+              -webkit-box-shadow: 0px 0px 19px 6px rgba(0, 0, 0, 0.1);
+              -moz-box-shadow: 0px 0px 19px 6px rgba(0, 0, 0, 0.1);
+              box-shadow: 0px 0px 19px 6px rgba(0, 0, 0, 0.1);
+            }
+          }
+        }
+
+      }
+    }
+  }
+}

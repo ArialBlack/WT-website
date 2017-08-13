@@ -35,7 +35,7 @@
   @sizeValue: @mysizeValue / @basefontsize;
   @remValue: @sizeValue;
   @pxValue: (@sizeValue * 10);
-  font-size: ~"@{pxValue}px"; 
+  font-size: ~"@{pxValue}px";
   font-size: ~"@{remValue}rem";
 }
 
@@ -43,7 +43,7 @@
   @sizeValue: @mysizeValue / @basefontsize;
   @remValue: @sizeValue;
   @pxValue: (@sizeValue * 10);
-  line-height: ~"@{pxValue}px"; 
+  line-height: ~"@{pxValue}px";
   line-height: ~"@{remValue}rem";
 }
 
@@ -164,4 +164,64 @@ P is the resulted value in "px" to use in CSS*/
   transform: translateY(-50%);
   //background: url('../images/dots-left-1.png') no-repeat center center;
   background-size: contain;
+}
+
+.yellow-button {
+  font-family: @Rr;
+  font-size: 16px;
+  color: @white;
+  background-color: @yellow;
+  padding: 22px 50px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all .4s ease;
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  &:hover {
+    background-color: darken(@yellow, 10);
+  }
+}
+
+.phantom-container {
+
+  @media (min-width: 992px) {
+    width: 970px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (min-width: @min-lg) {
+    width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (min-width: @min-xl) {
+    width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
+
+.white-button {
+  font-family: @Rr;
+  font-size: 16px;
+  color: @dark-gray;
+  background-color: @white;
+  padding: 22px 50px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all .4s ease;
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  &:hover {
+    background-color: darken(@white, 10);
+  }
 }

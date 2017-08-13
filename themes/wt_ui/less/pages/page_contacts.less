@@ -1,0 +1,402 @@
+.page-contacts {
+  background: #f4f4f4;
+
+  #block-views-c441d08fc33f05fb5a71092a1753e38d {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: 820px;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    img {
+      height: 820px;
+    }
+  }
+
+  .main-container {
+    section>.page-header {
+      position: absolute;
+      top: 390px;
+      left: 22%;
+      transform: translate(-50%, 0);
+      z-index: 2;
+      font-family: Alice-Reg;
+      font-size: 72px;
+      color: #ffffff;
+      border-bottom: none;
+    }
+
+    #block-views-address-geo-block-block {
+      .view-id-address_geo_block.view-display-id-block {
+        .phantom-container;
+        margin-top: 820px;
+        padding-top: 100px;
+
+
+        .views-field.views-field-field-phone-multi,
+        .views-field.views-field-field-phone-ks,
+        .views-field.views-field-field-phone-hot {
+          padding-left: 25px;
+          &:before {
+            position: absolute;
+            content: '';
+            background: url(../images/icons/yellow-phone.png);
+            left: 0;
+            top: 6px;
+            background-repeat: no-repeat;
+            width: 16px;
+            height: 16px;
+          }
+
+          @media (max-width: @min-xl) {
+            width: 33%;
+          }
+          @media (max-width: @min-lg) {
+            width: 40%;
+          }
+        }
+
+        .views-field.views-field-field-vest-mail {
+          padding-left: 25px;
+          &:before {
+            position: absolute;
+            content: '';
+            background: url(../images/icons/yellow-mail.png);
+            left: 0;
+            bottom: 6px;
+            background-repeat: no-repeat;
+            width: 16px;
+            height: 16px;
+          }
+        }
+
+        .views-field.views-field-field-vest-address-thoroughfare {
+          width: 29%;
+          padding-left: 25px;
+
+          &:before {
+            position: absolute;
+            content: '';
+            background: url(../images/icons/yellow-geo.png);
+            left: 3px;
+            top: 6px;
+            background-repeat: no-repeat;
+            width: 16px;
+            height: 16px;
+          }
+
+          @media (max-width: @min-lg) {
+            width: 40%;
+          }
+        }
+
+        .views-field.views-field-field-phone-hot {
+
+        }
+
+        .views-field.views-field-field-phone-multi,
+        .views-field.views-field-field-phone-ks,
+        .views-field.views-field-field-phone-hot,
+        .views-field.views-field-field-vest-mail,
+        .views-field.views-field-field-vest-address-thoroughfare {
+          position: relative;
+          font-family: @Rr;
+          font-size: @base2fontsize;
+          color: @dark-gray;
+          line-height: 28px;
+
+          .views-label.views-label-field-phone-multi,
+          .field-content,
+          .views-label.views-label-field-phone-ks,
+          .views-label.views-label-field-phone-hot {
+            display: inline-block;
+          }
+        }
+
+        .views-field.views-field-field-vest-mail {
+          margin-top: 70px;
+          line-height: 28px;
+        }
+
+        .views-field.views-field-field-vest-address-geocode {
+          width: 57%;
+          display: inline-block;
+          float: right;
+          margin-top: -230px;
+
+          @media (max-width: @min-lg) {
+
+          }
+
+          @media (max-width: @min-xl) {
+            margin-top: -260px;
+          }
+
+
+          .field-content .geofieldMap.geofield-processed-processed {
+            @media (max-width: @min-xl) and (min-width: 1201px){
+              width: 660px !important;
+            }
+
+            @media (max-width: @min-lg) {
+              width: 600px !important;
+            }
+          }
+        }
+      }
+    }
+
+    #block-system-main {
+      .phantom-container;
+      padding-top: 100px;
+
+      .view-header {
+        font-family: @Ar;
+        font-size: @titlefontsize;
+        color: @dark-gray;
+        text-align: center;
+      }
+
+      .views-view-grid.cols-3 {
+        tr{
+          display: flex;
+          padding-bottom: 40px;
+
+          &.row-1 {
+            padding-top: 50px;
+          }
+
+          td {
+            padding: 35px;
+            float: left;
+            width: 31.5%;
+            background: @white;
+            border: 2px solid #ecebe4;
+            transition: all .4s ease;
+
+            @media (max-width: @min-lg) {
+              padding: 35px 25px;
+            }
+
+            &:hover {
+              -webkit-box-shadow: 0px 0px 25px 6px rgba(0, 0, 0, 0.1);
+              -moz-box-shadow: 0px 0px 25px 6px rgba(0, 0, 0, 0.1);
+              box-shadow: 0px 0px 25px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            &.col-2,
+            &.col-3 {
+              margin-left: 40px;
+            }
+
+          .views-field.views-field-field-manager-image {
+            float: left;
+            display: inline-block;
+
+            img {
+              width: 70px;
+              border-radius: 60px;
+
+              @media (max-width: @min-lg) {
+                width: 50px;
+              }
+            }
+          }
+
+          .views-field.views-field-field-manager-name {
+            display: inline-block;
+            font-family: @Ar;
+            font-size: @basefontsize;
+            color: @dark-gray;
+            padding-left: 20px;
+
+            p {
+              font-family: @Rr;
+              font-size: @base4fontsize;
+              color: @dark-gray;
+              opacity: .7;
+            }
+
+            @media (max-width: @min-xl) {
+              font-size: 20px;
+            }
+
+            @media (max-width: @min-lg) {
+              font-size: 18px;
+              padding-left: 10px;
+            }
+          }
+
+          .views-field.views-field-field-manager-skype {
+            position: relative;
+            padding-top: 20px;
+
+            &:before {
+              position: absolute;
+              content: '';
+              background: url(../images/icons/gray-skype.png);
+              left:0;
+              bottom: 4px;
+              background-repeat: no-repeat;
+              width: 16px;
+              height: 16px;
+            }
+          }
+
+          .views-field.views-field-field-manager-skype,
+          .views-field.views-field-field-manager-mail,
+          .views-field.views-field-field-manager-tel {
+            font-family: @Rr;
+            font-size: @base2fontsize;
+            color: @dark-gray;
+            padding-left: 22px;
+            clear: both;
+          }
+
+            .views-field.views-field-field-manager-mail {
+              position: relative;
+
+              &:before {
+                position: absolute;
+                content: '';
+                background: url(../images/icons/gray-mail.png);
+                left:0;
+                bottom: 4px;
+                background-repeat: no-repeat;
+                width: 16px;
+                height: 16px;
+              }
+            }
+
+          .views-field.views-field-field-manager-tel {
+            position: relative;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #ecebe4;
+
+            &:before {
+              position: absolute;
+              content: '';
+              background: url(../images/icons/gray-phone.png);
+              left:0;
+              top: 4px;
+              background-repeat: no-repeat;
+              width: 16px;
+              height: 16px;
+            }
+          }
+
+          .views-field.views-field-field-manager-countries {
+            font-family: @Rr;
+            font-size: @base2fontsize;
+            color: @dark-gray;
+            opacity: .7;
+          }
+        }
+      }
+      }
+    }
+    #block-webform-client-block-45277 {
+      position: relative;
+      width: 1200px;
+      margin: 50px auto 240px auto;
+      padding: 80px 320px;
+      background: @yellow;
+      -webkit-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+      -moz-box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+      box-shadow: 0px 0px 19px 2px rgba(0, 0, 0, 0.07);
+
+      @media (max-width: 1300px) {
+        width: 1000px;
+        padding: 70px 280px;
+      }
+
+      &> h1 {
+        text-align: center;
+        font-family: @Ar;
+        font-size: @titlefontsize;
+        color: @white;
+      }
+
+      &>p {
+        font-family: @Rl;
+        font-size: @base3fontsize;
+        color: @white;
+        text-align: center;
+        padding-bottom: 40px;
+      }
+
+      .webform-component--main-name,
+      .webform-component--main-tel-or-email,
+      .webform-component--main-message {
+        input,
+        textarea {
+          font-family: @Rl;
+          font-size: @base4fontsize;
+          color: @dark-gray;
+        }
+      }
+
+      .webform-component--main-name,
+      .webform-component--main-tel-or-email {
+        width: 47%;
+        display: inline-block;
+
+        input {
+          height: 50px;
+        }
+      }
+
+      .webform-component--main-message {
+        padding-top: 40px;
+      }
+
+      .webform-component--main-tel-or-email {
+        float: right;
+      }
+
+      button {
+        .white-button;
+        border: none;
+        display: block;
+        margin: auto;
+        margin-top: 55px;
+      }
+
+      .up-arrow {
+        position: absolute;
+        bottom: -135px;
+        left:48%;
+        -webkit-transform: translate(-50%, 0);
+        -moz-transform: translate(-50%, 0);
+        -ms-transform: translate(-50%, 0);
+        -o-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+
+        a {
+          color: #b88682;
+          line-height: 41px;
+          font-size: 20px;
+
+          &:hover {
+            transition: all .3s ease;
+            text-decoration: none;
+            color: darken(#b88682, 10);
+          }
+        }
+      }
+    }
+  }
+}
